@@ -7,8 +7,6 @@ import "./App.css";
 import "react-image-crop/dist/ReactCrop.css";
 import * as htmlToImage from "html-to-image";
 
-// This is to demonstate how to make and center a % aspect crop
-// which is a bit trickier so we use some helper functions.
 function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
     return centerCrop(
         makeAspectCrop(
@@ -30,14 +28,12 @@ export default function App() {
     const previewCanvasRef = useRef(null);
     const imgRef = useRef(null);
     const hiddenAnchorRef = useRef(null);
-    // const blobUrlRef = useRef("");
     const [crop, setCrop] = useState();
     const [completedCrop, setCompletedCrop] = useState();
     const [radius, setRadius] = useState(0);
     const [checkbox, setCheckbox] = useState(false);
 
     const handleCheckbox = (e) => {
-        // console.log(e.target.checked);
         setCheckbox(e.target.checked);
         if (!e.target.checked) {
             setRadius(0);
@@ -49,7 +45,7 @@ export default function App() {
 
     function onSelectFile(e) {
         if (e.target.files && e.target.files.length > 0) {
-            setCrop(undefined); // Makes crop preview update between images.
+            setCrop(undefined);
             const reader = new FileReader();
             reader.addEventListener("load", () =>
                 setImgSrc(reader.result?.toString() || "")
@@ -63,24 +59,6 @@ export default function App() {
         setCrop(centerAspectCrop(width, height));
     }
 
-    // function onDownloadCropClick() {
-    //     if (!previewCanvasRef.current) {
-    //         throw new Error("Crop canvas does not exist");
-    //     }
-
-    //     previewCanvasRef.current.toBlob((blob) => {
-    //         if (!blob) {
-    //             throw new Error("Failed to create blob");
-    //         }
-    //         if (blobUrlRef.current) {
-    //             URL.revokeObjectURL(blobUrlRef.current);
-    //         }
-    //         blobUrlRef.current = URL.createObjectURL(blob);
-    //         hiddenAnchorRef.current.href = blobUrlRef.current;
-    //         hiddenAnchorRef.current.click();
-    //     });
-    // }
-
     useDebounceEffect(
         async () => {
             if (
@@ -89,7 +67,6 @@ export default function App() {
                 imgRef.current &&
                 previewCanvasRef.current
             ) {
-                // We use canvasPreview as it's much faster than imgPreview.
                 canvasPreview(
                     imgRef.current,
                     previewCanvasRef.current,
@@ -187,7 +164,6 @@ export default function App() {
                     <div className="download-btn-box">
                         <button
                             className="download-btn"
-                            // onClick={onDownloadCropClick}
                             onClick={downloadImage}>
                             Download Crop
                         </button>
