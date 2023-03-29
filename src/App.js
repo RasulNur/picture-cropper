@@ -5,6 +5,7 @@ import { canvasPreview } from "./canvasPreview";
 import { useDebounceEffect } from "./useDebounceEffect";
 import "./App.css";
 import "react-image-crop/dist/ReactCrop.css";
+import * as htmlToImage from "html-to-image";
 
 // This is to demonstate how to make and center a % aspect crop
 // which is a bit trickier so we use some helper functions.
@@ -29,10 +30,22 @@ export default function App() {
     const previewCanvasRef = useRef(null);
     const imgRef = useRef(null);
     const hiddenAnchorRef = useRef(null);
-    const blobUrlRef = useRef("");
+    // const blobUrlRef = useRef("");
     const [crop, setCrop] = useState();
     const [completedCrop, setCompletedCrop] = useState();
-    // const [radius, setRadius] = useState(5);
+    const [radius, setRadius] = useState(0);
+    const [checkbox, setCheckbox] = useState(false);
+
+    const handleCheckbox = (e) => {
+        // console.log(e.target.checked);
+        setCheckbox(e.target.checked);
+        if (!e.target.checked) {
+            setRadius(0);
+        } else {
+            setRadius(5);
+        }
+    };
+    console.log(checkbox);
 
     function onSelectFile(e) {
         if (e.target.files && e.target.files.length > 0) {
@@ -50,23 +63,23 @@ export default function App() {
         setCrop(centerAspectCrop(width, height));
     }
 
-    function onDownloadCropClick() {
-        if (!previewCanvasRef.current) {
-            throw new Error("Crop canvas does not exist");
-        }
+    // function onDownloadCropClick() {
+    //     if (!previewCanvasRef.current) {
+    //         throw new Error("Crop canvas does not exist");
+    //     }
 
-        previewCanvasRef.current.toBlob((blob) => {
-            if (!blob) {
-                throw new Error("Failed to create blob");
-            }
-            if (blobUrlRef.current) {
-                URL.revokeObjectURL(blobUrlRef.current);
-            }
-            blobUrlRef.current = URL.createObjectURL(blob);
-            hiddenAnchorRef.current.href = blobUrlRef.current;
-            hiddenAnchorRef.current.click();
-        });
-    }
+    //     previewCanvasRef.current.toBlob((blob) => {
+    //         if (!blob) {
+    //             throw new Error("Failed to create blob");
+    //         }
+    //         if (blobUrlRef.current) {
+    //             URL.revokeObjectURL(blobUrlRef.current);
+    //         }
+    //         blobUrlRef.current = URL.createObjectURL(blob);
+    //         hiddenAnchorRef.current.href = blobUrlRef.current;
+    //         hiddenAnchorRef.current.click();
+    //     });
+    // }
 
     useDebounceEffect(
         async () => {
@@ -88,10 +101,19 @@ export default function App() {
         [completedCrop]
     );
 
-    // const handleChangeRadius = (e) => {
-    //     setRadius(e.target.value);
-    //     console.log(radius);
-    // };
+    const downloadImage = async () => {
+        const dataUrl = await htmlToImage.toPng(previewCanvasRef.current);
+        // download image
+        const link = document.createElement("a");
+        link.download = "image.png";
+        link.href = dataUrl;
+        link.click();
+    };
+
+    const handleChangeRadius = (e) => {
+        setRadius(e.target.value);
+        console.log(radius);
+    };
 
     return (
         <div className="App">
@@ -125,9 +147,14 @@ export default function App() {
                     </ReactCrop>
                 )}
             </div>
-            {/* <div className="radius-box">
+            <div className="radius-box">
                 <div className="radius-group">
-                    <input className="radius-checkbox" type="checkbox" />
+                    <input
+                        className="radius-checkbox"
+                        type="checkbox"
+                        checked={checkbox}
+                        onChange={handleCheckbox}
+                    />
                     <label htmlFor="">Round corners</label>
                 </div>
 
@@ -136,29 +163,32 @@ export default function App() {
                     <input
                         className="radius-value-input"
                         defaultValue={5}
+                        disabled={!checkbox}
                         onChange={handleChangeRadius}
                         type="number"
                     />
                 </div>
-            </div> */}
+            </div>
             {!!completedCrop && (
                 <>
-                    <div>
+                    <div className="canvas-box">
                         <canvas
                             ref={previewCanvasRef}
                             style={{
                                 border: "1px solid black",
                                 objectFit: "contain",
-                                display: "none",
+                                // display: "none",
                                 width: completedCrop.width,
                                 height: completedCrop.height,
+                                borderRadius: `${radius ? radius : 0}px`,
                             }}
                         />
                     </div>
-                    <div>
+                    <div className="download-btn-box">
                         <button
                             className="download-btn"
-                            onClick={onDownloadCropClick}>
+                            // onClick={onDownloadCropClick}
+                            onClick={downloadImage}>
                             Download Crop
                         </button>
                         <a

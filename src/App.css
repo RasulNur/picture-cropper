@@ -80,9 +80,16 @@
     outline: none;
     padding: 9px;
 }
+.canvas-box {
+    min-height: 150px;
+}
 
 .download-btn {
     padding: 10px;
     border: none;
     background-color: #d9d9d9;
+}
+
+.download-btn-box {
+    margin-top: 20px;
 }
