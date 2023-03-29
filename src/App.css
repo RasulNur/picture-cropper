@@ -1,38 +1,88 @@
 .App {
-  text-align: center;
+    margin: 100px 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.crop__text-wrapper {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 6fr 1fr;
+    gap: 40px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.crop__text {
+    background-color: #d9d9d9;
+    padding: 15px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.crop__label {
+    background-color: #d9d9d9;
+    padding: 15px;
+    display: inline-block;
+    text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
+#imageUpload {
+    display: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.react-crop {
+    margin-top: 50px;
+    background-color: #d9d9d9;
+    min-width: 600px;
+    min-height: 400px;
+    margin-bottom: 30px;
+}
+
+.radius-box {
+    display: flex;
+    align-items: center;
+    gap: 90px;
+    margin-bottom: 20px;
+}
+
+.radius-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.radius-checkbox {
+    -webkit-appearance: none;
+    background-color: #d9d9d9;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
+        inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+    padding: 9px;
+    display: inline-block;
+    position: relative;
+}
+
+.radius-checkbox:checked:after {
+    content: " ";
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: 3px;
+    background: #99a1a7;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3);
+    text-shadow: 0px;
+    left: 3px;
+    font-size: 32px;
+}
+
+.radius-value-input {
+    background-color: #d9d9d9;
+    border: none;
+    outline: none;
+    padding: 9px;
+}
+
+.download-btn {
+    padding: 10px;
+    border: none;
+    background-color: #d9d9d9;
 }
