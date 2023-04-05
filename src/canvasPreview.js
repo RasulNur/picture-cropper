@@ -31,6 +31,7 @@ export async function canvasPreview(
     ctx.imageSmoothingQuality = "high";
 
     const cropX = crop.x * scaleX;
+
     const cropY = crop.y * scaleY;
 
     const rotateRads = rotate * TO_RADIANS;

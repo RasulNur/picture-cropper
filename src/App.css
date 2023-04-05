@@ -1,57 +1,62 @@
 .App {
-    margin: 100px 0 0;
+    margin: 50px auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    max-width: 600px;
+    min-height: 400px;
+    padding: 0 15px;
 }
 
 .crop__text-wrapper {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 6fr 1fr;
-    gap: 40px;
-}
-
-.crop__text {
-    background-color: #d9d9d9;
-    padding: 15px;
+    width: 100%;
+    max-height: 46px;
+    position: relative;
 }
 
 .crop__label {
-    background-color: #d9d9d9;
+    display: block;
     padding: 15px;
-    display: inline-block;
+    width: 100%;
+    color: #505255;
+    background-color: #d9d9d9;
     text-align: center;
+    border-radius: 10px;
 }
 
 #imageUpload {
-    display: none;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
 }
 
 .react-crop {
     margin-top: 50px;
     background-color: #d9d9d9;
-    min-width: 600px;
-    min-height: 400px;
     margin-bottom: 30px;
+    /* align-self: center; */
 }
 
 .radius-box {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
     align-items: center;
-    gap: 90px;
+    gap: 0px;
     margin-bottom: 20px;
 }
 
 .radius-group {
     display: flex;
     gap: 10px;
+    justify-content: space-between;
     align-items: center;
 }
 
 .radius-checkbox {
     -webkit-appearance: none;
+    appearance: none;
     background-color: #d9d9d9;
     border: 1px solid #cacece;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
@@ -59,6 +64,7 @@
     padding: 9px;
     display: inline-block;
     position: relative;
+    border-radius: 10px;
 }
 
 .radius-checkbox:checked:after {
@@ -72,24 +78,55 @@
     text-shadow: 0px;
     left: 3px;
     font-size: 32px;
+    border-radius: 10px;
 }
 
 .radius-value-input {
     background-color: #d9d9d9;
+    color: #505255;
     border: none;
     outline: none;
     padding: 9px;
+    border-radius: 10px;
 }
 .canvas-box {
     min-height: 150px;
+    align-self: center;
+}
+
+.download-btn-box {
+    align-self: center;
 }
 
 .download-btn {
     padding: 10px;
     border: none;
     background-color: #d9d9d9;
+    color: #505255;
+    border-radius: 10px;
 }
 
 .download-btn-box {
     margin-top: 20px;
+}
+
+@media (max-width: 767px) {
+}
+@media (max-width: 540px) {
+    .radius-box {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .radius-group {
+        justify-content: space-between;
+    }
+    .radius-group:nth-child(1) {
+        order: 2;
+    }
+    .radius-group:nth-child(2) {
+        order: 1;
+    }
+    .radius-value-input {
+        max-width: 150px;
+    }
 }

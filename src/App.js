@@ -32,6 +32,7 @@ export default function App() {
     const [completedCrop, setCompletedCrop] = useState();
     const [radius, setRadius] = useState(0);
     const [checkbox, setCheckbox] = useState(false);
+    const [aspect, setAspect] = useState(16 / 9);
 
     const handleCheckbox = (e) => {
         setCheckbox(e.target.checked);
@@ -55,8 +56,10 @@ export default function App() {
     }
 
     function onImageLoad(e) {
-        const { width, height } = e.currentTarget;
-        setCrop(centerAspectCrop(width, height));
+        if (aspect) {
+            const { width, height } = e.currentTarget;
+            setCrop(centerAspectCrop(width, height, aspect));
+        }
     }
 
     useDebounceEffect(
@@ -80,7 +83,6 @@ export default function App() {
 
     const downloadImage = async () => {
         const dataUrl = await htmlToImage.toPng(previewCanvasRef.current);
-        // download image
         const link = document.createElement("a");
         link.download = "image.png";
         link.href = dataUrl;
@@ -96,25 +98,31 @@ export default function App() {
         <div className="App">
             <div className="Crop-Controls">
                 <div className="crop__text-wrapper">
-                    <div className="crop__text">Select or drop file</div>
                     <label className="crop__label" htmlFor="imageUpload">
-                        Upload
+                        Select or drop file here
                     </label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        id="imageUpload"
+                        onChange={onSelectFile}
+                    />
                 </div>
-
-                <input
-                    type="file"
-                    accept="image/*"
-                    id="imageUpload"
-                    onChange={onSelectFile}
-                />
             </div>
-            <div className="react-crop">
+            <div
+                className="react-crop"
+                style={{
+                    width: `${!!imgSrc ? "fit-content" : ""}`,
+                    minHeight: `${!!imgSrc ? "" : "350px"}`,
+                    alignSelf: `${!!imgSrc ? "center" : ""}`,
+                    backgroundColor: `${!!imgSrc ? "white" : ""}`,
+                }}>
                 {!!imgSrc && (
                     <ReactCrop
                         crop={crop}
                         onChange={(_, percentCrop) => setCrop(percentCrop)}
-                        onComplete={(c) => setCompletedCrop(c)}>
+                        onComplete={(c) => setCompletedCrop(c)}
+                        style={{ display: "block" }}>
                         <img
                             ref={imgRef}
                             alt="Crop me"
@@ -152,9 +160,7 @@ export default function App() {
                         <canvas
                             ref={previewCanvasRef}
                             style={{
-                                border: "1px solid black",
                                 objectFit: "contain",
-                                // display: "none",
                                 width: completedCrop.width,
                                 height: completedCrop.height,
                                 borderRadius: `${radius ? radius : 0}px`,
