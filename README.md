@@ -1,8 +1,10 @@
 # Обрезчик изображений с возможностью изменять радиус
 
-Посмотреть можно [тут](https://rasulnur.github.io/picture-cropper/)
-Для обрезчика изображений использовал [react-image-crop](https://www.npmjs.com/package/react-image-crop)
-Для скачивания обрезанного и/или округленного изоюражения использовал [html-to-image](https://www.npmjs.com/package/html-to-image)
+### Посмотреть можно [тут](https://rasulnur.github.io/picture-cropper/)
+
+### Для обрезчика изображений использовал [react-image-crop](https://www.npmjs.com/package/react-image-crop)
+
+### Для скачивания обрезанного и/или округленного изоюражения использовал [html-to-image](https://www.npmjs.com/package/html-to-image)
 
 ### `npm run`
 
