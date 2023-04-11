@@ -24,6 +24,8 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
 }
 
 export default function App() {
+    const divToDownload = useRef(null);
+
     const [imgSrc, setImgSrc] = useState("");
     const previewCanvasRef = useRef(null);
     const imgRef = useRef(null);
@@ -36,13 +38,10 @@ export default function App() {
 
     const handleCheckbox = (e) => {
         setCheckbox(e.target.checked);
-        if (!e.target.checked) {
-            setRadius(0);
-        } else {
-            setRadius(5);
+        if (e.target.checked) {
+            radius ? setRadius(radius) : setRadius(5);
         }
     };
-    console.log(checkbox);
 
     function onSelectFile(e) {
         if (e.target.files && e.target.files.length > 0) {
@@ -82,7 +81,8 @@ export default function App() {
     );
 
     const downloadImage = async () => {
-        const dataUrl = await htmlToImage.toPng(previewCanvasRef.current);
+        const dataUrl = await htmlToImage.toPng(divToDownload.current);
+        console.log(dataUrl);
         const link = document.createElement("a");
         link.download = "image.png";
         link.href = dataUrl;
@@ -147,7 +147,7 @@ export default function App() {
                     <label htmlFor="">Round radius (px)</label>
                     <input
                         className="radius-value-input"
-                        defaultValue={5}
+                        value={radius}
                         disabled={!checkbox}
                         onChange={handleChangeRadius}
                         type="number"
@@ -156,14 +156,15 @@ export default function App() {
             </div>
             {!!completedCrop && (
                 <>
-                    <div className="canvas-box">
+                    <div className="canvas-box" ref={divToDownload}>
                         <canvas
                             ref={previewCanvasRef}
+                            id="download-comp"
                             style={{
                                 objectFit: "contain",
                                 width: completedCrop.width,
                                 height: completedCrop.height,
-                                borderRadius: `${radius ? radius : 0}px`,
+                                borderRadius: `${checkbox ? radius : 0}px`,
                             }}
                         />
                     </div>
