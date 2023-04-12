@@ -81,8 +81,13 @@ export default function App() {
     );
 
     const downloadImage = async () => {
+        let canvasDataUrl = await previewCanvasRef.current.toDataURL();
+        divToDownload.current.style = `background: url("${canvasDataUrl}") no-repeat 4 center`;
+        divToDownload.current.style = `border-radius: ${radius}px`;
+        previewCanvasRef.current.style.display = "hidden";
+
         const dataUrl = await htmlToImage.toPng(divToDownload.current);
-        console.log(dataUrl);
+
         const link = document.createElement("a");
         link.download = "image.png";
         link.href = dataUrl;
@@ -91,7 +96,6 @@ export default function App() {
 
     const handleChangeRadius = (e) => {
         setRadius(e.target.value);
-        console.log(radius);
     };
 
     return (
@@ -156,16 +160,22 @@ export default function App() {
             </div>
             {!!completedCrop && (
                 <>
-                    <div className="canvas-box" ref={divToDownload}>
+                    <div
+                        className="canvas-box"
+                        ref={divToDownload}
+                        style={{
+                            borderRadius: `${checkbox ? radius : 0}px`,
+                        }}>
                         <canvas
-                            ref={previewCanvasRef}
                             id="download-comp"
                             style={{
                                 objectFit: "contain",
                                 width: completedCrop.width,
                                 height: completedCrop.height,
-                                borderRadius: `${checkbox ? radius : 0}px`,
+                                // borderRadius: `${checkbox ? radius : 0}px`,
+                                borderRadius: `inherit`,
                             }}
+                            ref={previewCanvasRef}
                         />
                     </div>
                     <div className="download-btn-box">
