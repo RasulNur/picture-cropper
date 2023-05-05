@@ -24,7 +24,7 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
 }
 
 export default function App() {
-    // const divToDownload = useRef(null);
+    const divToDownload = useRef(null);
 
     const [imgSrc, setImgSrc] = useState("");
     const previewCanvasRef = useRef(null);
@@ -96,8 +96,8 @@ export default function App() {
     // };
 
     const downloadImage = async () => {
-        const dataUrl = await previewCanvasRef.current.toDataURL();
-        // download image
+        const dataUrl = await htmlToImage.toPng(divToDownload.current);
+
         const link = document.createElement("a");
         link.download = "image.png";
         link.href = dataUrl;
@@ -172,7 +172,7 @@ export default function App() {
                 <>
                     <div
                         className="canvas-box"
-                        // ref={divToDownload}
+                        ref={divToDownload}
                         style={{
                             borderRadius: `${checkbox ? radius : 0}px`,
                         }}>
@@ -182,7 +182,7 @@ export default function App() {
                                 objectFit: "contain",
                                 width: completedCrop.width,
                                 height: completedCrop.height,
-                                borderRadius: `inherit`,
+                                borderRadius: "inherit",
                             }}
                             ref={previewCanvasRef}
                         />
