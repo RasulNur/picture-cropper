@@ -24,7 +24,7 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
 }
 
 export default function App() {
-    const divToDownload = useRef(null);
+    // const divToDownload = useRef(null);
 
     const [imgSrc, setImgSrc] = useState("");
     const previewCanvasRef = useRef(null);
@@ -80,14 +80,24 @@ export default function App() {
         [completedCrop]
     );
 
+    // const downloadImage = async () => {
+    //     let canvasDataUrl = await previewCanvasRef.current.toDataURL();
+
+    //     divToDownload.current.style = `background: url("${canvasDataUrl}") no-repeat 4 center`;
+    //     divToDownload.current.style = `border-radius: ${radius}px`;
+    //     previewCanvasRef.current.style.display = "hidden";
+
+    //     const dataUrl = await htmlToImage.toPng(divToDownload.current);
+
+    //     const link = document.createElement("a");
+    //     link.download = "image.png";
+    //     link.href = dataUrl;
+    //     link.click();
+    // };
+
     const downloadImage = async () => {
-        let canvasDataUrl = await previewCanvasRef.current.toDataURL();
-        divToDownload.current.style = `background: url("${canvasDataUrl}") no-repeat 4 center`;
-        divToDownload.current.style = `border-radius: ${radius}px`;
-        previewCanvasRef.current.style.display = "hidden";
-
-        const dataUrl = await htmlToImage.toPng(divToDownload.current);
-
+        const dataUrl = await previewCanvasRef.current.toDataURL();
+        // download image
         const link = document.createElement("a");
         link.download = "image.png";
         link.href = dataUrl;
@@ -162,7 +172,7 @@ export default function App() {
                 <>
                     <div
                         className="canvas-box"
-                        ref={divToDownload}
+                        // ref={divToDownload}
                         style={{
                             borderRadius: `${checkbox ? radius : 0}px`,
                         }}>
@@ -172,7 +182,6 @@ export default function App() {
                                 objectFit: "contain",
                                 width: completedCrop.width,
                                 height: completedCrop.height,
-                                // borderRadius: `${checkbox ? radius : 0}px`,
                                 borderRadius: `inherit`,
                             }}
                             ref={previewCanvasRef}
