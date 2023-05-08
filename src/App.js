@@ -114,10 +114,13 @@ export default function App() {
         await previewCanvasRef.current.toDataURL();
         const dataUrl = await htmlToImage.toPng(previewCanvasRef.current);
         // await previewCanvasRef.current.toDataURL();
-
+        previewCanvasRef.current.toDataURL();
         const link = document.createElement("a");
+        previewCanvasRef.current.toDataURL();
         link.download = "image.png";
+        previewCanvasRef.current.toDataURL();
         link.href = dataUrl;
+        previewCanvasRef.current.toDataURL();
         link.click();
     };
 
