@@ -80,25 +80,20 @@ export default function App() {
         [completedCrop]
     );
 
-    const downloadImage = async () => {
-        let canvasDataUrl = await previewCanvasRef.current.toDataURL();
+    // const downloadImage = async () => {
+    //     let canvasDataUrl = await previewCanvasRef.current.toDataURL();
 
-        divToDownload.current.style = `background: url("${canvasDataUrl}") no-repeat 4 center`;
-        canvasDataUrl = await previewCanvasRef.current.toDataURL();
-        divToDownload.current.style = `border-radius: ${radius}px`;
-        await previewCanvasRef.current.toDataURL();
-        previewCanvasRef.current.style.display = "hidden";
-        await previewCanvasRef.current.toDataURL();
-        const dataUrl = await htmlToImage.toPng(divToDownload.current);
-        await previewCanvasRef.current.toDataURL();
-        const link = document.createElement("a");
-        await previewCanvasRef.current.toDataURL();
-        link.download = "image";
-        await previewCanvasRef.current.toDataURL();
-        link.href = dataUrl;
-        await previewCanvasRef.current.toDataURL();
-        link.click();
-    };
+    //     divToDownload.current.style = `background: url("${canvasDataUrl}") no-repeat 4 center`;
+    //     divToDownload.current.style = `border-radius: ${radius}px`;
+    //     previewCanvasRef.current.style.display = "hidden";
+
+    //     const dataUrl = await htmlToImage.toPng(divToDownload.current);
+
+    //     const link = document.createElement("a");
+    //     link.download = "image";
+    //     link.href = dataUrl;
+    //     link.click();
+    // };
 
     // const downloadImage = async () => {
     //     let canvasDataUrl = await previewCanvasRef.current.toDataURL();
@@ -115,16 +110,16 @@ export default function App() {
     //     link.click();
     // };
 
-    // const downloadImage = async () => {
-    //     await previewCanvasRef.current.toDataURL();
-    //     const dataUrl = await htmlToImage.toPng(previewCanvasRef.current);
-    //     await previewCanvasRef.current.toDataURL();
+    const downloadImage = async () => {
+        await previewCanvasRef.current.toDataURL();
+        const dataUrl = await htmlToImage.toPng(previewCanvasRef.current);
+        // await previewCanvasRef.current.toDataURL();
 
-    //     const link = document.createElement("a");
-    //     link.download = "image.png";
-    //     link.href = dataUrl;
-    //     link.click();
-    // };
+        const link = document.createElement("a");
+        link.download = "image.png";
+        link.href = dataUrl;
+        link.click();
+    };
 
     const handleChangeRadius = (e) => {
         setRadius(e.target.value);
