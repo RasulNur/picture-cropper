@@ -86,17 +86,17 @@ export default function App() {
         divToDownload.current.style = `background: url("${canvasDataUrl}") no-repeat 4 center`;
         canvasDataUrl = await previewCanvasRef.current.toDataURL();
         divToDownload.current.style = `border-radius: ${radius}px`;
-        canvasDataUrl = await previewCanvasRef.current.toDataURL();
+        await previewCanvasRef.current.toDataURL();
         previewCanvasRef.current.style.display = "hidden";
-        canvasDataUrl = await previewCanvasRef.current.toDataURL();
+        await previewCanvasRef.current.toDataURL();
         const dataUrl = await htmlToImage.toPng(divToDownload.current);
-        canvasDataUrl = await previewCanvasRef.current.toDataURL();
+        await previewCanvasRef.current.toDataURL();
         const link = document.createElement("a");
-        canvasDataUrl = await previewCanvasRef.current.toDataURL();
+        await previewCanvasRef.current.toDataURL();
         link.download = "image";
-        canvasDataUrl = await previewCanvasRef.current.toDataURL();
+        await previewCanvasRef.current.toDataURL();
         link.href = dataUrl;
-        previewCanvasRef.current.toDataURL();
+        await previewCanvasRef.current.toDataURL();
         link.click();
     };
 
