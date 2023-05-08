@@ -34,7 +34,7 @@ export default function App() {
     const [completedCrop, setCompletedCrop] = useState();
     const [radius, setRadius] = useState(0);
     const [checkbox, setCheckbox] = useState(false);
-    const [aspect, setAspect] = useState(16 / 9);
+    const [aspect, _] = useState(16 / 9);
 
     const handleCheckbox = (e) => {
         setCheckbox(e.target.checked);
@@ -89,16 +89,32 @@ export default function App() {
 
         const dataUrl = await htmlToImage.toPng(divToDownload.current);
 
-        await previewCanvasRef.current.toDataURL();
-
         const link = document.createElement("a");
-        link.download = "image.png";
+        link.download = "image";
         link.href = dataUrl;
+        previewCanvasRef.current.toDataURL();
         link.click();
     };
 
     // const downloadImage = async () => {
+    //     let canvasDataUrl = await previewCanvasRef.current.toDataURL();
+
+    //     divToDownload.current.style = `background: url("${canvasDataUrl}") no-repeat 4 center`;
+    //     divToDownload.current.style = `border-radius: ${radius}px`;
+    //     previewCanvasRef.current.style.display = "hidden";
+    //     previewCanvasRef.current.toDataURL();
     //     const dataUrl = await htmlToImage.toPng(divToDownload.current);
+
+    //     const link = document.createElement("a");
+    //     link.download = "image.png";
+    //     link.href = dataUrl;
+    //     link.click();
+    // };
+
+    // const downloadImage = async () => {
+    //     await previewCanvasRef.current.toDataURL();
+    //     const dataUrl = await htmlToImage.toPng(previewCanvasRef.current);
+    //     await previewCanvasRef.current.toDataURL();
 
     //     const link = document.createElement("a");
     //     link.download = "image.png";
