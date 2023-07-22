@@ -1,13 +1,29 @@
-import React, { useState, useRef } from "react";
+import {
+    useState,
+    useRef,
+    FC,
+    ChangeEventHandler,
+    SyntheticEvent,
+    ChangeEvent,
+} from "react";
 
-import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
+import ReactCrop, {
+    Crop,
+    centerCrop,
+    makeAspectCrop,
+    PixelCrop,
+} from "react-image-crop";
 import { canvasPreview } from "./canvasPreview";
 import { useDebounceEffect } from "./useDebounceEffect";
 import "./App.css";
 import "react-image-crop/dist/ReactCrop.css";
 import * as htmlToImage from "html-to-image";
 
-function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
+const centerAspectCrop = (
+    mediaWidth: number,
+    mediaHeight: number,
+    aspect: number
+) => {
     return centerCrop(
         makeAspectCrop(
             {
@@ -21,29 +37,29 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
         mediaWidth,
         mediaHeight
     );
-}
+};
 
-export default function App() {
+export const App: FC = () => {
     const divToDownload = useRef(null);
 
     const [imgSrc, setImgSrc] = useState("");
-    const previewCanvasRef = useRef(null);
-    const imgRef = useRef(null);
-    const hiddenAnchorRef = useRef(null);
-    const [crop, setCrop] = useState();
-    const [completedCrop, setCompletedCrop] = useState();
-    const [radius, setRadius] = useState(0);
-    const [checkbox, setCheckbox] = useState(false);
-    const [aspect, _] = useState(16 / 9);
+    const previewCanvasRef = useRef<HTMLCanvasElement>(null);
+    const imgRef = useRef<HTMLImageElement>(null);
+    const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
+    const [crop, setCrop] = useState<Crop>();
+    const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
+    const [radius, setRadius] = useState<number | string>(0);
+    const [checkbox, setCheckbox] = useState<boolean>(false);
+    const [aspect, _] = useState<number | undefined>(16 / 9);
 
-    const handleCheckbox = (e) => {
+    const handleCheckbox: ChangeEventHandler<HTMLInputElement> = (e) => {
         setCheckbox(e.target.checked);
         if (e.target.checked) {
             radius ? setRadius(radius) : setRadius(5);
         }
     };
 
-    function onSelectFile(e) {
+    const onSelectFile: ChangeEventHandler<HTMLInputElement> = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             setCrop(undefined);
             const reader = new FileReader();
@@ -52,14 +68,14 @@ export default function App() {
             );
             reader.readAsDataURL(e.target.files[0]);
         }
-    }
+    };
 
-    function onImageLoad(e) {
+    const onImageLoad = (e: SyntheticEvent<HTMLImageElement>) => {
         if (aspect) {
             const { width, height } = e.currentTarget;
             setCrop(centerAspectCrop(width, height, aspect));
         }
-    }
+    };
 
     useDebounceEffect(
         async () => {
@@ -110,8 +126,12 @@ export default function App() {
     //     link.click();
     // };
 
-    const downloadImage = async () => {
-        await previewCanvasRef.current.toDataURL();
+    const downloadImage = async (): Promise<void> => {
+        if (!previewCanvasRef.current) {
+            throw new Error("Crop canvas does not exist");
+        }
+        previewCanvasRef.current.toDataURL();
+
         const dataUrl = await htmlToImage.toPng(previewCanvasRef.current);
         // await previewCanvasRef.current.toDataURL();
         previewCanvasRef.current.toDataURL();
@@ -124,7 +144,7 @@ export default function App() {
         link.click();
     };
 
-    const handleChangeRadius = (e) => {
+    const handleChangeRadius = (e: ChangeEvent<HTMLInputElement>) => {
         setRadius(e.target.value);
     };
 
@@ -133,7 +153,7 @@ export default function App() {
             <div className="Crop-Controls">
                 <div className="crop__text-wrapper">
                     <label className="crop__label" htmlFor="imageUpload">
-                        Select or drop file here
+                        Select file here
                     </label>
                     <input
                         type="file"
@@ -228,4 +248,4 @@ export default function App() {
             )}
         </div>
     );
-}
+};

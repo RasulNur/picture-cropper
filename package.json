@@ -1,19 +1,21 @@
 {
-    "name": "edit-picture",
+    "name": "picture-editor-ts",
     "version": "0.1.0",
     "private": true,
-    "homepage": "https://rasulnur.github.io/picture-cropper/",
     "dependencies": {
-        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
-        "bootstrap": "^5.2.3",
+        "@types/jest": "^27.5.2",
+        "@types/node": "^16.18.39",
+        "@types/react": "^18.2.15",
+        "@types/react-dom": "^18.2.7",
         "html-to-image": "^1.11.11",
         "react": "^18.2.0",
-        "react-bootstrap": "^2.7.2",
         "react-dom": "^18.2.0",
-        "react-image-crop": "^10.0.9",
+        "react-image-crop": "^10.1.5",
         "react-scripts": "5.0.1",
+        "typescript": "^4.9.5",
         "web-vitals": "^2.1.4"
     },
     "scripts": {
@@ -41,8 +43,5 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
-    },
-    "devDependencies": {
-        "gh-pages": "^5.0.0"
     }
 }
