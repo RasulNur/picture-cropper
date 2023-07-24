@@ -96,51 +96,15 @@ export const App: FC = () => {
         [completedCrop]
     );
 
-    // const downloadImage = async () => {
-    //     let canvasDataUrl = await previewCanvasRef.current.toDataURL();
-
-    //     divToDownload.current.style = `background: url("${canvasDataUrl}") no-repeat 4 center`;
-    //     divToDownload.current.style = `border-radius: ${radius}px`;
-    //     previewCanvasRef.current.style.display = "hidden";
-
-    //     const dataUrl = await htmlToImage.toPng(divToDownload.current);
-
-    //     const link = document.createElement("a");
-    //     link.download = "image";
-    //     link.href = dataUrl;
-    //     link.click();
-    // };
-
-    // const downloadImage = async () => {
-    //     let canvasDataUrl = await previewCanvasRef.current.toDataURL();
-
-    //     divToDownload.current.style = `background: url("${canvasDataUrl}") no-repeat 4 center`;
-    //     divToDownload.current.style = `border-radius: ${radius}px`;
-    //     previewCanvasRef.current.style.display = "hidden";
-    //     previewCanvasRef.current.toDataURL();
-    //     const dataUrl = await htmlToImage.toPng(divToDownload.current);
-
-    //     const link = document.createElement("a");
-    //     link.download = "image.png";
-    //     link.href = dataUrl;
-    //     link.click();
-    // };
-
     const downloadImage = async (): Promise<void> => {
         if (!previewCanvasRef.current) {
             throw new Error("Crop canvas does not exist");
         }
         previewCanvasRef.current.toDataURL();
-
         const dataUrl = await htmlToImage.toPng(previewCanvasRef.current);
-        // await previewCanvasRef.current.toDataURL();
-        previewCanvasRef.current.toDataURL();
         const link = document.createElement("a");
-        previewCanvasRef.current.toDataURL();
         link.download = "image.png";
-        previewCanvasRef.current.toDataURL();
         link.href = dataUrl;
-        previewCanvasRef.current.toDataURL();
         link.click();
     };
 
@@ -191,16 +155,22 @@ export const App: FC = () => {
                     <input
                         className="radius-checkbox"
                         type="checkbox"
+                        name="radius-checkbox"
+                        id="radius-checkbox"
                         checked={checkbox}
                         onChange={handleCheckbox}
                     />
-                    <label htmlFor="">Round corners</label>
+                    <label htmlFor="radius-checkbox">Round corners</label>
                 </div>
 
                 <div className="radius-group">
-                    <label htmlFor="">Round radius (px)</label>
+                    <label htmlFor="radius-value-input">
+                        Round radius (px)
+                    </label>
                     <input
                         className="radius-value-input"
+                        name="radius-value-input"
+                        id="radius-value-input"
                         value={radius}
                         disabled={!checkbox}
                         onChange={handleChangeRadius}
@@ -235,7 +205,6 @@ export const App: FC = () => {
                         </button>
                         <a
                             ref={hiddenAnchorRef}
-                            download
                             style={{
                                 position: "absolute",
                                 top: "-200vh",
