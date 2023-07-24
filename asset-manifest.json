@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/picture-cropper/static/css/main.82261fa4.css",
-    "main.js": "/picture-cropper/static/js/main.289cac08.js",
+    "main.js": "/picture-cropper/static/js/main.327125f7.js",
     "index.html": "/picture-cropper/index.html",
     "main.82261fa4.css.map": "/picture-cropper/static/css/main.82261fa4.css.map",
-    "main.289cac08.js.map": "/picture-cropper/static/js/main.289cac08.js.map"
+    "main.327125f7.js.map": "/picture-cropper/static/js/main.327125f7.js.map"
   },
   "entrypoints": [
     "static/css/main.82261fa4.css",
-    "static/js/main.289cac08.js"
+    "static/js/main.327125f7.js"
   ]
 }
